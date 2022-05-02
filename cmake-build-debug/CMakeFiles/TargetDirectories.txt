@@ -1,0 +1,3 @@
+/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/cmake-build-debug/CMakeFiles/edit_cache.dir
+/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/cmake-build-debug/CMakeFiles/code.dir
