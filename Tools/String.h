@@ -10,7 +10,7 @@ namespace Tools {
 template<size_t LENGTH = 100>
 class String {
 private:
-    char str[LENGTH]{0};
+    char str[LENGTH]{};
 public:
     String() = default;
     String(const char *s);

@@ -8,6 +8,17 @@ namespace backEnd {
 
 enum OrderStatus{ UNKNOWN, SUCCESS, PENDING, REFUNDED};
 
+struct Order_key{
+    size_t date; //日期
+    size_t tid;  //车辆
+    bool operator<(const Order_key &b) const {
+        return (date < b.date) || (date == b.date && tid < b.tid);
+    }
+    bool operator==(const Order_key &b) const {
+        return (date == b.date && tid == b.tid);
+    }
+};
+
 struct Order{
     OrderStatus _status = UNKNOWN;
     Tools::String<22> username;  //购票人
@@ -30,13 +41,10 @@ struct Refund{  //仅用于回滚：维护一次退票后候补队列的买进�
 
 class WaitingQueue {
 private:
-    Tools::BPlusTree<size_t, Order> userWaitingQueue;  //用户为索引的候补队列
-    Tools::BPlusTree<size_t, Order> stationWaitingQueue;  //车站为索引的候补队列
-    /*两个队列保持同时修改的原则*/
+    Tools::BPlusTree<Order_key, Order, true> trainWaitingQueue;  //某车次的候补队列, 一对多
 public:
     WaitingQueue() = default;
-    explicit WaitingQueue(const std::string &userFN, const std::string &stationFN) : userWaitingQueue(userFN),
-                                                                                     stationWaitingQueue(stationFN) {}
+    explicit WaitingQueue(const std::string &filename) : trainWaitingQueue(filename){}
     ~WaitingQueue() = default;
     bool insert(size_t uid, size_t sid, Order &orderInfo);  //加入候补队列
     bool findAndSale(Order &orderInfo);  //有人退票后补票
@@ -49,12 +57,12 @@ public:
 class OrderSystem {
 private:
     WaitingQueue waiting_queue;  //维护所有的等待队列
-    Tools::BPlusTree<size_t, Order> allOrder;  //维护所有用户的订单信息
+    Tools::BPlusTree<size_t, Order, true, true> allOrder;  //维护所有用户的订单信息, 一对多，不断向前插入
     Tools::BPlusTree<int, Refund> refundRecord;  //仅用于回滚：时间戳下的退款记录
 public:
     OrderSystem() = default;
-    explicit OrderSystem(const std::string &userQueueFN, const std::string &stationQueueFN, const std::string &orderFN)
-            : waiting_queue(userQueueFN, stationQueueFN), allOrder(orderFN) {}
+    explicit OrderSystem(const std::string &queueFN, const std::string &orderFN)
+            : waiting_queue(queueFN), allOrder(orderFN) {}
     ~OrderSystem() = default;
     bool buy_ticket(const std::string &username, const std::string &trainID, const std::string &date, int ticketNum,
                     const std::string &station1, const std::string station2, bool wait = false);
