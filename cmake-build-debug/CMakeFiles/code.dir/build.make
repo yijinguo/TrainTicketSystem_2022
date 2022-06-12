@@ -57,27 +57,27 @@ include CMakeFiles/code.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/code.dir/flags.make
 
-CMakeFiles/code.dir/main.cpp.o: CMakeFiles/code.dir/flags.make
-CMakeFiles/code.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/code.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/code.dir/main.cpp.o -c /mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/main.cpp
+CMakeFiles/code.dir/try.cpp.o: CMakeFiles/code.dir/flags.make
+CMakeFiles/code.dir/try.cpp.o: ../try.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/code.dir/try.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/code.dir/try.cpp.o -c /mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/try.cpp
 
-CMakeFiles/code.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/code.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/main.cpp > CMakeFiles/code.dir/main.cpp.i
+CMakeFiles/code.dir/try.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/code.dir/try.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/try.cpp > CMakeFiles/code.dir/try.cpp.i
 
-CMakeFiles/code.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/code.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/main.cpp -o CMakeFiles/code.dir/main.cpp.s
+CMakeFiles/code.dir/try.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/code.dir/try.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/try.cpp -o CMakeFiles/code.dir/try.cpp.s
 
 # Object files for target code
 code_OBJECTS = \
-"CMakeFiles/code.dir/main.cpp.o"
+"CMakeFiles/code.dir/try.cpp.o"
 
 # External object files for target code
 code_EXTERNAL_OBJECTS =
 
-code: CMakeFiles/code.dir/main.cpp.o
+code: CMakeFiles/code.dir/try.cpp.o
 code: CMakeFiles/code.dir/build.make
 code: CMakeFiles/code.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable code"

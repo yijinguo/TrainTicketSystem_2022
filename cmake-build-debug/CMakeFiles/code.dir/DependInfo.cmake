@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/main.cpp" "/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/cmake-build-debug/CMakeFiles/code.dir/main.cpp.o"
+  "/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/try.cpp" "/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/cmake-build-debug/CMakeFiles/code.dir/try.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
