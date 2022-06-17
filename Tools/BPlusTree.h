@@ -312,14 +312,7 @@ private:
             } else {  //新点要加入的位置在前半段
                 Key tmpNewIndex = now.index[tmp - 1];
                 SecondKey tmpNewIndexSecond = now.index_second[tmp - 1];
-                for (int i = tmp - 1; i > nextIndex; --i) {
-                    now.index[i] = now.index[i - 1];
-                    now.index_second[i] = now.index_second[i - 1];
-                    now.pointer[i + 1] = now.pointer[i];
-                }
-                now.index[nextIndex] = newIndex;
-                now.index_second[nextIndex] = newIndexSecond;
-                newIndex = tmpNewIndex, newIndexSecond = tmpNewIndexSecond;
+
                 int i = tmp, k = 0;
                 for ( ; i < now.num; ++i, ++k){
                     newNode.index[k] = now.index[i];
@@ -327,6 +320,16 @@ private:
                     newNode.pointer[k] = now.pointer[i];
                 }
                 newNode.pointer[k] = now.pointer[i];
+
+                for (i = tmp - 1; i > nextIndex; --i) {
+                    now.index[i] = now.index[i - 1];
+                    now.index_second[i] = now.index_second[i - 1];
+                    now.pointer[i + 1] = now.pointer[i];
+                }
+                now.index[nextIndex] = newIndex;
+                now.index_second[nextIndex] = newIndexSecond;
+                newIndex = tmpNewIndex, newIndexSecond = tmpNewIndexSecond;
+
                 now.pointer[nextIndex + 1] = newNodeLoc;
                 now.num = tmp;
                 newNode.num = M - tmp - 1;
@@ -452,13 +455,14 @@ private:
                     left = now.pointer[nextIndex - 1];
                     file.seekg(left);
                     file.read(reinterpret_cast<char *>(&leftNode), sizeNode);
-                    if (leftNode.num > M / 2) {
-                        for (int i = nextNode.num; i > 0; ++i) {
+                    if (leftNode.num > (M - 1) / 2) {
+                        for (int i = nextNode.num; i > 0; --i) {
                             nextNode.index[i] = nextNode.index[i - 1];
                             nextNode.index_second[i] = nextNode.index_second[i - 1];
                             nextNode.pointer[i + 1] = nextNode.pointer[i];
                         }
                         nextNode.pointer[1] = nextNode.pointer[0];
+                        nextNode.pointer[0] = leftNode.pointer[leftNode.num];
                         nextNode.index[0] = now.index[nextIndex - 1];
                         nextNode.index_second[0] = now.index_second[nextIndex - 1];
                         now.index[nextIndex - 1] = leftNode.index[leftNode.num - 1];
@@ -478,7 +482,7 @@ private:
                     right = now.pointer[nextIndex + 1];
                     file.seekg(right);
                     file.read(reinterpret_cast<char *>(&rightNode), sizeNode);
-                    if (rightNode.num > M / 2) {
+                    if (rightNode.num > (M - 1) / 2) {
                         nextNode.num++;
                         nextNode.index[nextNode.num - 1] = now.index[nextIndex];
                         nextNode.index_second[nextNode.num - 1] = now.index_second[nextIndex];
@@ -541,7 +545,7 @@ private:
                         now.pointer[i + 1] = now.pointer[i + 2];
                     }
                 }
-                if (now.num < M / 2) {
+                if (now.num < (M - 1) / 2) {
                     back = true;
                 } else {
                     file.seekp(nowLoc);
@@ -553,20 +557,14 @@ private:
         } else {  //叶结点
             DataNode dataNode;
             file.read(reinterpret_cast<char *>(&dataNode), sizeData);
-            int leftIn = Tools::lower_bound(dataNode.index, index, dataNode.num);
+            int in = Tools::find_index(dataNode.index, index, dataNode.num);
+            if (in == -1) return false;
             int rightIn = Tools::upper_bound(dataNode.index, index, dataNode.num);
-            int in = leftIn;
-            if (in == dataNode.num || Compare()(dataNode.index[in], index) || Compare()(index, dataNode.index[in])) return false;
-            if (leftIn == rightIn) {
-                if (CompareK()(dataNode.index_second[in], indexSecond) || CompareK()(indexSecond, dataNode.index_second[in]))
-                    return false;
-            } else {
-                for ( ; in < rightIn; ++in) {
-                    if (!CompareK()(dataNode.index_second[in], indexSecond) && !CompareK()(indexSecond, dataNode.index_second[in]))
-                        break;
-                }
-                if (in == rightIn) return false;
+            for (; in < rightIn; ++in) {
+                if (!CompareK()(dataNode.index_second[in], indexSecond) && !CompareK()(indexSecond, dataNode.index_second[in]))
+                    break;
             }
+            if (in == rightIn) return false;
             dataNode.num--;
             for (int i = in; i < dataNode.num; ++i) {
                 dataNode.index[i] = dataNode.index[i + 1];
@@ -636,8 +634,6 @@ private:
                     file.write(reinterpret_cast<char *>(&rightNode), sizeData);
                     file.seekp(next);
                     file.write(reinterpret_cast<char *>(&dataNode), sizeData);
-                    file.seekp(nowLoc);
-                    file.write(reinterpret_cast<char *>(&now), sizeNode);
                     back = false;
                     if (in == 0) {
                         if (nextIndex == 0) {
@@ -648,6 +644,8 @@ private:
                             now.index_second[nextIndex - 1] = dataNode.index_second[0];
                         }
                     }
+                    file.seekp(nowLoc);
+                    file.write(reinterpret_cast<char *>(&now), sizeNode);
                     return true;
                 }
             }

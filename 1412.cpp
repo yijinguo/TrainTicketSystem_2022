@@ -26,11 +26,11 @@ struct Value {
 };
 
 int main(){
-    //freopen("2.in", "r", stdin);
-    //freopen("gyj.out", "w", stdout);
+    freopen("5.in", "r", stdin);
+    freopen("gyj.out", "w", stdout);
     const std::string file = "file";
     const std::string datafile = "datafile";
-    Tools::BPlusTree<Key, Value, 10, 10, true, true, int> tree(file, datafile);
+    Tools::BPlusTree<Key, Value, 6, 6, true, true, int> tree(file, datafile);
     int n;
     scanf("%d", &n);
     std::string op;
@@ -70,3 +70,29 @@ int main(){
     //remove("file");
     //remove("datafile");
 }
+
+/*
+int main() {
+    //freopen("gyj.out", "w", stdout);
+    const std::string file = "file";
+    const std::string datafile = "datafile";
+    Tools::BPlusTree<long long, int, 5, 5, true, true, int> tree(file, datafile);
+    for (int i = 1; i <= 4; ++i) {
+        tree.Insert(1,i,i);
+    }
+    for (int i = 1; i <= 6; ++i) {
+        tree.Insert(2, i, i);
+    }
+    for (int i = 1; i <= 2; ++i) {
+        tree.Insert(3,i,i);
+    }
+    int num;
+    sjtu::vector<int> t;
+    tree.find(2, num, t);
+    std::cout << num << '\n';
+    for (int i = 0; i < num; ++i) {
+        std::cout << t[i] << '\n';
+    }
+    remove("file");
+    remove("datafile");
+}*/
