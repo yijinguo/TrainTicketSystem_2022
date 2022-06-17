@@ -102,6 +102,7 @@ public:
             file.seekp(next);
             file.write(reinterpret_cast<char *>(&dataNode), sizeData);
             root.pointer[0] = next;
+            root.num = 0;
             beginning = next;
             return;
         }
@@ -424,6 +425,7 @@ private:
     }
 
     bool remove(Node &now, long long nowLoc, Key index, SecondKey indexSecond, bool &back, bool &push, Key &newIndex, SecondKey &newIndexSecond){
+        //todo 考虑now为根且只有一个指针
         int leftIndex = Tools::lower_bound(now.index, index, now.num);
         int rightIndex = Tools::upper_bound(now.index, index, now.num);
         int nextIndex = leftIndex;
@@ -579,6 +581,11 @@ private:
                 dataNode.index_second[i] = dataNode.index_second[i + 1];
                 dataNode.Loc[i] = dataNode.Loc[i + 1];
             }
+            if (nowLoc == rootLoc && now.num == 0) {
+                file.seekp(next);
+                file.write(reinterpret_cast<char *>(&dataNode), sizeData);
+                return true;
+            }
             if (in == 0 && nextIndex == 0) push = true;
             if (dataNode.num >= L / 2) {
                 if (in == 0) {
@@ -686,7 +693,7 @@ private:
                         now.index_second[nextIndex - 1] = dataNode.index_second[0];
                     }
                 }
-            } else {  //now.num；合左侧
+            } else if (nextIndex != 0) {  //now.num；合左侧
                 for (int i = leftNode.num, k = 0; k < dataNode.num; ) {
                     leftNode.index[i] = dataNode.index[k];
                     leftNode.index_second[i] = dataNode.index_second[k];
