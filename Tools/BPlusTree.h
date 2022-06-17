@@ -445,8 +445,10 @@ private:
                }
             }
             if (!back) {
-                file.seekp(nowLoc);
-                file.write(reinterpret_cast<char *>(&now), sizeNode);
+                if (nowLoc != -1) {
+                    file.seekp(nowLoc);
+                    file.write(reinterpret_cast<char *>(&now), sizeNode);
+                }
                 return true;
             } else { //此时nextNode内的索引数少于最低值
                 long long left = 0, right = 0;
@@ -472,8 +474,10 @@ private:
                         file.write(reinterpret_cast<char *>(&leftNode), sizeNode);
                         file.seekp(next);
                         file.write(reinterpret_cast<char *>(&nextNode), sizeNode);
-                        file.seekp(nowLoc);
-                        file.write(reinterpret_cast<char *>(&now), sizeNode);
+                        if (nowLoc != -1) {
+                            file.seekp(nowLoc);
+                            file.write(reinterpret_cast<char *>(&now), sizeNode);
+                        }
                         back = false;
                         return true;
                     }
@@ -500,8 +504,10 @@ private:
                         rightNode.pointer[rightNode.num] = rightNode.pointer[rightNode.num + 1];
                         file.seekp(right);
                         file.write(reinterpret_cast<char *>(&rightNode), sizeNode);
-                        file.seekp(nowLoc);
-                        file.write(reinterpret_cast<char *>(&now), sizeNode);
+                        if (nowLoc != -1) {
+                            file.seekp(nowLoc);
+                            file.write(reinterpret_cast<char *>(&now), sizeNode);
+                        }
                         back = false;
                         return true;
                     }
@@ -548,8 +554,10 @@ private:
                 if (now.num < (M - 1) / 2) {
                     back = true;
                 } else {
-                    file.seekp(nowLoc);
-                    file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    if (nowLoc != -1) {
+                        file.seekp(nowLoc);
+                        file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    }
                     back = false;
                 }
                 return true;
@@ -608,8 +616,10 @@ private:
                     file.write(reinterpret_cast<char *>(&leftNode), sizeData);
                     file.seekp(next);
                     file.write(reinterpret_cast<char *>(&dataNode), sizeData);
-                    file.seekp(nowLoc);
-                    file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    if (nowLoc != -1) {
+                        file.seekp(nowLoc);
+                        file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    }
                     back = false;
                     return true;
                 }
@@ -644,8 +654,10 @@ private:
                             now.index_second[nextIndex - 1] = dataNode.index_second[0];
                         }
                     }
-                    file.seekp(nowLoc);
-                    file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    if (nowLoc != -1) {
+                        file.seekp(nowLoc);
+                        file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    }
                     return true;
                 }
             }
@@ -689,8 +701,10 @@ private:
             if (now.num < M / 2) {
                 back = true;
             } else {
-                file.seekp(nowLoc);
-                file.write(reinterpret_cast<char *>(&now), sizeNode);
+                if (nowLoc != -1) {
+                    file.seekp(nowLoc);
+                    file.write(reinterpret_cast<char *>(&now), sizeNode);
+                }
                 back = false;
             }
             return true;
@@ -812,8 +826,10 @@ private:
                     file.seekp(0, std::ios::end);
                     newNodeLoc = file.tellp();
                     file.write(reinterpret_cast<char *>(&newNode), sizeNode);
-                    file.seekp(nowLoc);
-                    file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    if (nowLoc != -1) {
+                        file.seekp(nowLoc);
+                        file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    }
                     return false;
                 } else { //不需要裂点
                     for (int i = now.num; i >= nextIndex + 1; --i) {
@@ -823,8 +839,10 @@ private:
                     now.index[nextIndex] = newIndex;
                     now.pointer[nextIndex + 1] = newNodeLoc;
                     now.num++;
-                    file.seekp(nowLoc);
-                    file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    if (nowLoc != -1) {
+                        file.seekp(nowLoc);
+                        file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    }
                     return true;
                 }
             }
@@ -926,8 +944,10 @@ private:
                         nextNode.num++;
                         file.seekp(next);
                         file.write(reinterpret_cast<char *>(&nextNode), sizeNode);
-                        file.seekp(nowLoc);
-                        file.write(reinterpret_cast<char *>(&now), sizeNode);
+                        if (nowLoc != -1) {
+                            file.seekp(nowLoc);
+                            file.write(reinterpret_cast<char *>(&now), sizeNode);
+                        }
                         back = true;
                         return true;
                     }
@@ -953,8 +973,10 @@ private:
                         rightNode.pointer[rightNode.num] = rightNode.pointer[rightNode.num + 1];
                         file.seekp(right);
                         file.write(reinterpret_cast<char *>(&rightNode), sizeNode);
-                        file.seekp(nowLoc);
-                        file.write(reinterpret_cast<char *>(&now), sizeNode);
+                        if (nowLoc != -1) {
+                            file.seekp(nowLoc);
+                            file.write(reinterpret_cast<char *>(&now), sizeNode);
+                        }
                         back = true;
                         return true;
                     }
@@ -991,8 +1013,10 @@ private:
                 if (now.num < M / 2) {
                     back = true;
                 } else {
-                    file.seekp(nowLoc);
-                    file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    if (nowLoc != -1) {
+                        file.seekp(nowLoc);
+                        file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    }
                     back = false;
                 }
                 return true;
@@ -1032,8 +1056,10 @@ private:
                     file.write(reinterpret_cast<char *>(&leftNode), sizeData);
                     file.seekp(next);
                     file.write(reinterpret_cast<char *>(&dataNode), sizeData);
-                    file.seekp(nowLoc);
-                    file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    if (nowLoc != -1) {
+                        file.seekp(nowLoc);
+                        file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    }
                     back = false;
                     return true;
                 }
@@ -1055,8 +1081,10 @@ private:
                     file.write(reinterpret_cast<char *>(&rightNode), sizeData);
                     file.seekp(next);
                     file.write(reinterpret_cast<char *>(&dataNode), sizeData);
-                    file.seekp(nowLoc);
-                    file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    if (nowLoc != -1) {
+                        file.seekp(nowLoc);
+                        file.write(reinterpret_cast<char *>(&now), sizeNode);
+                    }
                     back = false;
                     return true;
                 }
@@ -1089,8 +1117,10 @@ private:
             if (now.num < M / 2) {
                 back = true;
             } else {
-                file.seekp(nowLoc);
-                file.write(reinterpret_cast<char *>(&now), sizeNode);
+                if (nowLoc != -1) {
+                    file.seekp(nowLoc);
+                    file.write(reinterpret_cast<char *>(&now), sizeNode);
+                }
                 back = false;
             }
             return true;
