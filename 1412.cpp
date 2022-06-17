@@ -30,7 +30,7 @@ int main(){
     //freopen("gyj.out", "w", stdout);
     const std::string file = "file";
     const std::string datafile = "datafile";
-    Tools::BPlusTree<Key, Value, 20, 20, true, true, int> tree(file, datafile);
+    Tools::BPlusTree<Key, Value, 7, 7, true, true, int> tree(file, datafile);
     int n;
     scanf("%d", &n);
     std::string op;
