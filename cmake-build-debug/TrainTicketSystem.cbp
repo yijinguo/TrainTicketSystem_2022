@@ -82,6 +82,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/1412.cpp">
+			<Option target="code"/>
+		</Unit>
 		<Unit filename="/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/Execute.h">
 			<Option target="code"/>
 		</Unit>
@@ -116,9 +119,6 @@
 			<Option target="code"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/parse.h">
-			<Option target="code"/>
-		</Unit>
-		<Unit filename="/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/try.cpp">
 			<Option target="code"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/guoyijin-繁花似锦/github/TrainTicketSystem_2022/CMakeLists.txt">

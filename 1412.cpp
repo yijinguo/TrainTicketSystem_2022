@@ -1,4 +1,6 @@
 #include "Tools/BPlusTree.h"
+#include <stdio.h>
+
 
 struct Key{
     char Index[65] = {'\0'};
@@ -24,14 +26,18 @@ struct Value {
 };
 
 int main(){
+    //freopen("5.in", "r", stdin);
+    //freopen("gyj.out", "w", stdout);
     const std::string file = "file";
     const std::string datafile = "datafile";
-    Tools::BPlusTree<Key, Value, 300, 300, true, true, int> tree(file, datafile);
+    Tools::BPlusTree<Key, Value, 3, 3, true, true, int> tree(file, datafile);
     int n;
     scanf("%d", &n);
     std::string op;
     while (n--) {
         std::cin >> op;
+        if (n == 1)
+            int i = 0;
         if (op == "insert") {
             std::string in;
             int inValue;
@@ -61,5 +67,6 @@ int main(){
             }
         }
     }
+    //remove("file");
+    //remove("datafile");
 }
-

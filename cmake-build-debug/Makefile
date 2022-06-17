@@ -123,32 +123,32 @@ code/fast:
 	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/build
 .PHONY : code/fast
 
-try.o: try.cpp.o
+1412.o: 1412.cpp.o
 
-.PHONY : try.o
+.PHONY : 1412.o
 
 # target to build an object file
-try.cpp.o:
-	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/try.cpp.o
-.PHONY : try.cpp.o
+1412.cpp.o:
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/1412.cpp.o
+.PHONY : 1412.cpp.o
 
-try.i: try.cpp.i
+1412.i: 1412.cpp.i
 
-.PHONY : try.i
+.PHONY : 1412.i
 
 # target to preprocess a source file
-try.cpp.i:
-	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/try.cpp.i
-.PHONY : try.cpp.i
+1412.cpp.i:
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/1412.cpp.i
+.PHONY : 1412.cpp.i
 
-try.s: try.cpp.s
+1412.s: 1412.cpp.s
 
-.PHONY : try.s
+.PHONY : 1412.s
 
 # target to generate assembly for a file
-try.cpp.s:
-	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/try.cpp.s
-.PHONY : try.cpp.s
+1412.cpp.s:
+	$(MAKE) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/1412.cpp.s
+.PHONY : 1412.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... code"
-	@echo "... try.o"
-	@echo "... try.i"
-	@echo "... try.s"
+	@echo "... 1412.o"
+	@echo "... 1412.i"
+	@echo "... 1412.s"
 .PHONY : help
 
 
