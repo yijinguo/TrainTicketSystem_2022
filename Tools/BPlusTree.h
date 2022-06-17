@@ -82,7 +82,7 @@ public:
         datafile.close();
     }
 
-    void Insert(Key index, SecondKey indexSecond, T value) {  //sameKey
+    bool Insert(Key index, SecondKey indexSecond, T value) {  //sameKey
         total++;
         datafile.seekp(0, std::ios::end);
         long long newLoc = datafile.tellp();
@@ -104,9 +104,10 @@ public:
             root.pointer[0] = next;
             root.num = 0;
             beginning = next;
-            return;
+            return true;
         }
-        if (!insert(root, rootLoc, index, indexSecond, newLoc, newIndex, newIndexSecond, newNodeLoc)) {
+        bool exist = false;
+        if (!insert(root, rootLoc, index, indexSecond, newLoc, newIndex, newIndexSecond, newNodeLoc, exist)) {
             Node newRoot;
             newRoot.type = 0;
             newRoot.num = 1;
@@ -126,6 +127,10 @@ public:
             file.write(reinterpret_cast<char *>(&newRoot), sizeNode);
             root = newRoot;
         }
+        if (exist)
+            return false;
+        else
+            return true;
     }
 
     void Insert(Key index, T value){  // !sameKey
@@ -207,6 +212,10 @@ public:
 
     bool find(Key index, SecondKey indexSecond, T &ans) {
         return findKey(root, index, indexSecond, ans);
+    }
+
+    void modify(Key index, SecondKey indexSecond, T value) {
+
     }
 
 private:
@@ -362,7 +371,7 @@ private:
         }
     }
 
-    bool insert(Node &now, long long nowLoc, Key index, SecondKey indexSecond, long long data, Key &newIndex, SecondKey &newIndexSecond, long long &newNodeLoc) { //允许相同键值时
+    bool insert(Node &now, long long nowLoc, Key index, SecondKey indexSecond, long long data, Key &newIndex, SecondKey &newIndexSecond, long long &newNodeLoc, bool &exist) { //允许相同键值时
         int leftIndex = Tools::lower_bound(now.index, index, now.num);
         int rightIndex = Tools::upper_bound(now.index, index, now.num);
         int nextIndex;
@@ -372,7 +381,12 @@ private:
             next = now.pointer[leftIndex];
         } else {
             for (nextIndex = leftIndex; nextIndex < rightIndex; ++nextIndex) {
-                if (CompareK()(indexSecond, now.index_second[nextIndex])) break;
+                if (CompareK()(indexSecond, now.index_second[nextIndex])) {
+                    break;
+                } else if (!CompareK()(now.index_second[nextIndex], indexSecond)) {
+                    exist = true;
+                    return true;
+                }
             }
             next = now.pointer[nextIndex];
         }
@@ -380,7 +394,7 @@ private:
         if (!now.type) {  //下一个结点仍为索引结点
             Node nextNode;
             file.read(reinterpret_cast<char *>(&nextNode), sizeNode);
-            if (insert(nextNode, next, index, indexSecond, data, newIndex, newIndexSecond, newNodeLoc)) {
+            if (insert(nextNode, next, index, indexSecond, data, newIndex, newIndexSecond, newNodeLoc, exist)) {
                 return true;
             } else {
                 return changeNode(now, nowLoc, nextIndex, newIndex, newIndexSecond, newNodeLoc);
@@ -394,7 +408,12 @@ private:
                 int in = left;
                 if (left != right) {
                     for ( ; in < right; ++in) {
-                        if (CompareK()(indexSecond, dataNode.index_second[in])) break;
+                        if (CompareK()(indexSecond, dataNode.index_second[in])) {
+                            break;
+                        } else if (!CompareK()(dataNode.index_second[in], indexSecond)) {
+                            exist = true;
+                            return true;
+                        }
                     }
                 }
                 splitData(dataNode, next, in, index, indexSecond, data, newIndex, newIndexSecond, newNodeLoc);
@@ -405,7 +424,12 @@ private:
                 int insertIndex = left;
                 if (left != right) {
                     for ( ; insertIndex < right; ++insertIndex) {
-                        if (CompareK()(indexSecond, dataNode.index_second[insertIndex])) break;
+                        if (CompareK()(indexSecond, dataNode.index_second[insertIndex])) {
+                            break;
+                        } else if (!CompareK()(dataNode.index_second[insertIndex], indexSecond)) {
+                            exist = true;
+                            return true;
+                        }
                     }
                 }
                 for (int i = dataNode.num; i > insertIndex; --i) {
