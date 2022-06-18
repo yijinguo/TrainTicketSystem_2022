@@ -26,11 +26,11 @@ struct Value {
 };
 
 int main(){
-    //freopen("5.in", "r", stdin);
-    //freopen("gyj.out", "w", stdout);
+    freopen("5.in", "r", stdin);
+    freopen("gyj.out", "w", stdout);
     const std::string file = "file";
     const std::string datafile = "datafile";
-    Tools::BPlusTree<Key, Value, 20, 20, true, true, int> tree(file, datafile);
+    Tools::BPlusTree<Key, Value, 20, 20, int> tree(file, datafile);
     int n;
     scanf("%d", &n);
     std::string op;
@@ -65,6 +65,14 @@ int main(){
                     std::cout << t[i].t << ' ';
                 std::cout << '\n';
             }
+        } else if (op == "modify") {
+            std::string s;
+            int origin;
+            int inValue;
+            std::cin >> s >> origin >> inValue;
+            Key index(s);
+            Value value(s, inValue);
+            tree.modify(index, origin, value);
         }
     }
     //remove("file");
