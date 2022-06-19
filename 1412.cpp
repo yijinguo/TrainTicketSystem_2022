@@ -26,11 +26,9 @@ struct Value {
 };
 
 int main(){
-    freopen("5.in", "r", stdin);
-    freopen("gyj.out", "w", stdout);
-    const std::string file = "file";
-    const std::string datafile = "datafile";
-    Tools::BPlusTree<Key, Value, 20, 20, int> tree(file, datafile);
+    //freopen("5.in", "r", stdin);
+    //freopen("gyj.out", "w", stdout);
+    Tools::BPlusTree<Key, Value, 10, 10, int> tree("file", "datafile");
     int n;
     scanf("%d", &n);
     std::string op;

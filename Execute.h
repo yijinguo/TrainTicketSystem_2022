@@ -16,13 +16,20 @@ private:
     OrderSystem orderSystem;
     struct cmdLine{
         bool existence = true;  //该命令行是否为有效命令行(否：false)
-        char line[1000];
-    };
-    Tools::BPlusTree<int, cmdLine> timestampSystem;
+        char line[1000]{};
+        explicit cmdLine(const std::string &s){
+            strcpy(line, s.c_str());
+        }
+        void initialise(const std::string &s){
+            strcpy(line, s.c_str());
+        }
+    } c;
+
+    Tools::BPlusTree<int, cmdLine, 100, 100> timestampSystem("timestampSystem", "timestampData");
 
     System() = default;
     ~System() = default;
-    void add_user();  //对应回滚函数：LogSystem::delete_user
+    void add_user() {}  //对应回滚函数：LogSystem::delete_user
     void login();  //对应回滚函数：logout
     void logout();  //对应回滚函数：login
     void query_profile();
@@ -43,7 +50,45 @@ private:
 
 public:
 
-    void execute(std::string &cmd); //核心执行函数，执行各种操作
+    void execute(std::string &cmd) { //核心执行函数，执行各种操作
+        command.Initialise(cmd);
+        c.initialise(command.cmd);
+        std::string order = command.takeFirstWord();
+        if (order == "add_user") {
+            add_user();
+        } else if (order == "login") {
+            login();
+        } else if (order == "logout") {
+            logout();
+        } else if (order == "query_profile") {
+            query_profile();
+        } else if (order == "modify_profile") {
+            modify_profile();
+        } else if (order == "add_train") {
+            add_train();
+        } else if (order == "release_train") {
+            release_train();
+        } else if (order == "query_train") {
+            query_train();
+        } else if (order == "query_ticket") {
+            query_ticket();
+        } else if (order == "query_transfer") {
+            query_transfer();
+        } else if (order == "buy_ticket") {
+            buy_ticket();
+        } else if (order == "query_order") {
+            query_order();
+        } else if (order == "refund_ticket") {
+            refund_ticket();
+        } else if (order == "rollback") {
+            rollback();
+        } else if (order == "clean") {
+            clear();
+        } else if (order == "exit") {
+            exit();
+        }
+        timestampSystem.Insert(command.timestamp, 0, c);
+    }
 
 };
 

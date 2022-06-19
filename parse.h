@@ -3,39 +3,57 @@
 
 #include <iostream>
 #include <cstring>
+#include "SJTU/vector.hpp"
+
 namespace backEnd {
 
 class Command {
-private:
-    struct Node {
-        struct data {
-            char type;  //单字符表示的信息类型
-            std::string cmd;  //对应单词
-            data(){
-                type = '\0';
-                cmd = "";
-            }
-            data(char _type, const std::string &_cmd):type(_type){
-                cmd = _cmd;
-            }
-        } info;
-        Node *front = nullptr;
-        Node *next = nullptr;
-        Node() = default;
-        Node(char _type, const std::string &_cmd):info(_type, _cmd){}
-    };  //一个结点表示一个有效信息
-    int timestamp = 0; //命令行的时间戳
-    std::string cmdType;  //命令行第一个单词，表示指令类型
-    Node *head = nullptr;
-    Node *rear = nullptr;
-    //链表存储除首单词外的命令
+
 public:
+
+    int timestamp = 0; //命令行的时间戳
+    std::string cmd;
+
     Command() = default;
-    Command(std::string &command);  //利用整行命令构造一个Command变量
-    ~Command();
-    void parseCmd(std::string &command); //本类的核心函数：解析输入的命令行command，将解析结果存入cmd_p中
-    //辅助函数
-    void take_first(std::string &cmd);  //获取字符串cmd的第一个单词，并将cmd第一个单词剔除
+    explicit Command(std::string &command){
+        timestamp = 0;
+        cmd = command;
+        std::string time = takeFirstWord();
+        for (int i = 1; i < time.length() - 1; ++i)
+            timestamp = timestamp * 10 + time[i] - '0';
+    }
+    ~Command() = default;
+
+    void Initialise(std::string &command){
+        timestamp = 0;
+        cmd = command;
+        std::string time = takeFirstWord();
+        for (int i = 1; i < time.length() - 1; ++i)
+            timestamp = timestamp * 10 + time[i] - '0';
+    }
+
+    std::string takeFirstWord() {//获取字符串cmd的第一个单词，并将cmd第一个单词剔除
+        int index = 0;
+        int firstWordIndex;
+        std::string firstWord;
+        while (cmd[index] == ' ') { ++index; }
+        firstWordIndex = index;
+        while (cmd[index] != ' ' && cmd[index] != '\0') { ++index; }
+        char word[index - firstWordIndex + 1];
+        for (int i = 0; i < index - firstWordIndex; ++i) { word[i] = cmd[i + firstWordIndex]; }
+        word[index - firstWordIndex] = '\0';
+        std::string result = std::string(word);
+        while (cmd[index] == ' ') { ++index; }
+        int l = cmd.length();
+        if (cmd[index] == '\0') {
+            cmd = "";
+            return result;
+        }
+        for (int i = index; i < l; ++i) cmd[i - index] = cmd[i];
+        cmd[l - index] = '\0';
+        return result;
+    }
+
     bool read_empty(std::string cmd);  //可能需要的函数：判断字符串cmd是否被读完（仅剩空格）
     void clear();  //可能需要的函数：清空数据
 };
