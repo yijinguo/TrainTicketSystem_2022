@@ -55,12 +55,15 @@ int main(){
             Key index(s);
             int num = 0;
             sjtu::vector<Value> t;
-            tree.find(index, num, t);
-            if (num == 0) {
+            tree.find(index,  t);
+            if (t.empty()) {
                 std::cout << "null\n";
             } else {
-                for (int i = 0; i < num; ++i)
-                    std::cout << t[i].t << ' ';
+                auto it = t.begin();
+                while (it != t.end()) {
+                    std::cout << (*it).t << ' ';
+                    it++;
+                }
                 std::cout << '\n';
             }
         } else if (op == "modify") {
