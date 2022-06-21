@@ -3,7 +3,7 @@ project(TrainTicketSystem)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(code main.cpp
+add_executable(code 1412.cpp
         parse.h
         Execute.h
         LogSystem.h
